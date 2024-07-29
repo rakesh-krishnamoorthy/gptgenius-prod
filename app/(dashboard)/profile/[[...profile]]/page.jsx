@@ -1,4 +1,4 @@
-import { fetchUserTokensById } from '@/utils/actions';
+import { fetchUserTokensById } from '@/utils/action';
 import { UserProfile } from '@clerk/nextjs';
 import { auth } from '@clerk/nextjs/server';
 
