@@ -35,9 +35,9 @@ const Chat = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         const query = {role:'user', content:text}
-        mutate(query);
         setMessages((prev) => [...prev, query]);
         setText('');
+        mutate(query);
     } 
     console.log(messages);
     
