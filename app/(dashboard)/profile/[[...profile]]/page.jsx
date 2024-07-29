@@ -11,7 +11,7 @@ const ProfilePage = async () => {
       <h2 className='mb-8 ml-8 text-xl font-extrabold'>
         TokenAmount: {currentTokens}
       </h2>
-      <UserProfile />
+      <UserProfile  routing='hash' />
     </div>
   )
 }
