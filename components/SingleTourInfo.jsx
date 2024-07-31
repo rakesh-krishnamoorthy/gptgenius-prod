@@ -2,7 +2,7 @@
 import React from 'react'
 
 const SingleTourInfo = ({ tour }) => {
-  console.log( 'trip', tour)
+  console.log( 'Single-trip', tour)
   const { title,description,stops } = tour;
   return (
     <div className='max-w-2xl'>

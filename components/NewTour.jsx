@@ -1,7 +1,7 @@
 'use client';
 
 import { useQueryClient , useMutation } from '@tanstack/react-query';
-import { getExistingTour,generateTourResponse,createNewTour } from '@/utils/action';
+import { getExistingTour,generateTourResponse,createNewTour,fetchUserTokensById,subtractTokens, } from '@/utils/action';
 import React from 'react'
 import toast from 'react-hot-toast';
 import Tourinfo from './Tourinfo';
@@ -30,53 +30,53 @@ const NewTour = () => {
         return null;
       }
       
-        const response = await createNewTour(newTour.tour)
+        const response = await createNewTour(newTour)
+        console.log(response)
         queryClient.invalidateQueries({ queryKey : ['tours'] })
         const newTokens = await subtractTokens(userId, newTour.tokens)
         toast.success(`${newTokens} tokens remaining...`)
-        return newTour.tour;
-      
+        return newTour;
       
     }
   })
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        const formData = new FormData(e.currentTarget)
-        const Destination = Object.fromEntries(formData.entries());
-        console.log(Destination);
-        mutate(Destination)
-    }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const destination = Object.fromEntries(formData.entries());
+    mutate(destination);
+  };
 
-    if(isPending){
-      return <span className=' loading loading-lg '></span>
-    }
+  if (isPending) {
+    return <span className='loading loading-lg'></span>;
+  }
 
   return (
-    <div>
-        <form onSubmit={handleSubmit} className='max-w-4xl' >
-            <h2 className='mb-4'>Select Your Dream Destination</h2>
-            <div className="join max-w">
-                <input type="text" className='input input-bordered join-item w-full'
-                 placeholder='city'
-                 name='city'
-                 required />
-
-                 <input type="text" className='input input-bordered join-item w-full'
-                  placeholder='country'
-                  name='country'
-                  required />
-                  
-                <button className='btn btn-primary join-item'  type='submit'>generate tour</button>
-            </div>
-        </form>
-        {/*For spacing between the form and generated code */}
-        <div className="mt-16">
-          { tour ? <Tourinfo tour = {tour} /> : null }
+    <>
+      <form onSubmit={handleSubmit} className='max-w-2xl'>
+        <h2 className='mb-4'>Select your dream destination</h2>
+        <div className='join w-full'>
+          <input
+            type='text'
+            className='input input-bordered join-item w-full'
+            placeholder='city'
+            name='city'
+            required
+          />
+          <input
+            type='text'
+            className='input input-bordered join-item w-full'
+            placeholder='country'
+            name='country'
+            required
+          />
+          <button className='btn btn-primary join-item' type='submit'>
+            generate tour
+          </button>
         </div>
-
-    </div>
-  )
-}
-
-export default NewTour
+      </form>
+      <div className='mt-16'>{tour ? <Tourinfo tour={tour} /> : null}</div>
+    </>
+  );
+};
+export default NewTour;
